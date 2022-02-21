@@ -1,0 +1,20 @@
+[package]
+name = "ddns"
+version = "0.1.0"
+edition = "2021"
+
+[target.aarch64-unknown-linux-musl]
+image = "ddns:latest"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1" }
+reqwest = { version = "0.11", default-features = false, features = [
+  "json",
+  "rustls-tls",
+  "blocking"
+] }
+
+[target.'cfg(all(target_env = "musl", target_pointer_width = "64"))'.dependencies.jemallocator]
+version = "0.3"
